@@ -1,0 +1,35 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "-",
+        "name": "Death Chest",
+        "uuid": "9fb73533-967e-490a-8604-69830657a154",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 20, 0]
+    },
+    "modules": [
+        {
+            "type": "data",
+            "description": "-",
+            "uuid": "f6023d63-3fda-481f-bd7c-f7c46b41a725",
+            "version": [1, 0, 0]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "3e3aa47d-9777-494d-9c58-5b531134579f",
+            "entry": "scripst/main.js",
+            "version": [1, 0, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.5.0"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "2.0.0"
+        }
+    ]
+}

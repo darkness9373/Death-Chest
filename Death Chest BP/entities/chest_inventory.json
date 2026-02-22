@@ -1,0 +1,52 @@
+
+{
+    "format_version": "1.20.80",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dc:chest_inventory",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:knockback_resistance": {
+                "value": 1
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1
+            },
+            "minecraft:collision_box": {
+                "height": 0.2,
+                "width": 0.2
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "all",
+                        "deals_damage": "no"
+                    }
+                ]
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:inventory": {
+                "can_be_siphoned_from": false,
+                "inventory_size": 45
+            },
+            "minecraft:nameable": {
+                "allow_name_tag_renaming": true,
+                "always_show": true
+            },
+            "minecraft:movement": {
+                "value": 0,
+                "max": 0
+            },
+            "minecraft:physics": {
+                "has_gravity": false
+            }
+        }
+    }
+}
