@@ -12,7 +12,8 @@
             "minecraft:icon": "tripwire_hook",
             "minecraft:display_name": {
                 "value": "Death Key"
-            }
+            },
+            "minecraft:stacked_by_data": false
         }
     }
 }
