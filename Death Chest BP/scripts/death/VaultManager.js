@@ -28,7 +28,7 @@ export function handleItemDrop(player) {
     if (chest) {
         chest.setPermutation(server.BlockPermutation.resolve('minecraft:chest'));
     }
-    const vault = dim.spawnEntity('dc:chest_inventory', { x: x + 0.5, y: y, z: z + 0.5 });
+    const vault = dim.spawnEntity('dc:chest_inventory', { x: x + 0.5, y: y + 1, z: z + 0.5 });
     vault.addTag('death_vault');
     const invCom = vault.getComponent('minecraft:inventory');
     if (!invCom) return;
