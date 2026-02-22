@@ -34,7 +34,7 @@
             },
             "minecraft:inventory": {
                 "can_be_siphoned_from": false,
-                "inventory_size": 45
+                "inventory_size": 54
             },
             "minecraft:nameable": {
                 "allow_name_tag_renaming": true,
