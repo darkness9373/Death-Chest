@@ -25,7 +25,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
         return;
     }
     const item = player.getComponent('minecraft:inventory').container.getItem(player.selectedSlotIndex);
-    if (!item || item.typeId !== 'minecraft:tripwire_hook') {
+    if (!item || item.typeId !== 'dc:death_key') {
         player.sendMessage('You must be holding the key!');
         return;
     }
