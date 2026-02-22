@@ -47,6 +47,9 @@ export function handleItemDrop(player) {
     vault.setDynamicProperty('locked', true);
     vault.nameTag = 'test';
     const key = new server.ItemStack('dc:death_key');
-    key.setDynamicProperty('location', { x, y, z });
+    key.setDynamicProperty('location', JSON.stringify({ x, y, z }));
+    key.setLore([
+    ])
+    ` §o§gBound to chest at (${x}, ${y}, ${z})§r`
     player.getComponent('minecraft:inventory').container.addItem(key);
 }
