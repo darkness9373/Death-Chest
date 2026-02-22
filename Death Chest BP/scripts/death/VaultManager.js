@@ -38,4 +38,8 @@ export function handleItemDrop(player) {
         container.setItem(slot, item);
         slot++;
     }
+    vault.setDynamicProperty('owner', player.id);
+    vault.setDynamicProperty('deathTime', Date.now());
+    vault.setDynamicProperty('expire', Date.now() + (20 * 60 * 1000));
+    vault.nameTag = 'test';
 }
