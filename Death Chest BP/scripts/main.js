@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { world, system } from '@minecraft/server';
 import './death/DeathManager.js';
 
 world.beforeEvents.playerInteractWithBlock.subscribe(data => {
@@ -7,7 +7,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
     const dim = block.dimension;
 
     const vaults = dim.getEntities({
-        location: { x: block.location.x + 0.5, y: block.location.y, z: block.location.z + 0.5 },
+        location: { x: block.location.x + 0.5, y: block.location.y + 1, z: block.location.z + 0.5 },
         maxDistance: 0.6,
         type: 'dc:chest_inventory'
     })
@@ -39,6 +39,8 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
         return;
     }
     vault.setDynamicProperty('locked', false);
-    player.getComponent('minecraft:inventory').container.setItem(player.selectedSlotIndex, undefined);
+    system.run(() => {
+        player.getComponent('minecraft:equippable').setEquipment('Mainhand', undefined)
+    })
     player.sendMessage('The chest is unlocked!');
 })

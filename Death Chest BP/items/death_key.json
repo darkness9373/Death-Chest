@@ -9,7 +9,7 @@
         },
         "components": {
             "minecraft:max_stack_size": 1,
-            "minecraft:icon": "tripwire_hook",
+            "minecraft:icon": "trial_key",
             "minecraft:display_name": {
                 "value": "Death Key"
             },
