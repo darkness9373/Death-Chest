@@ -4,18 +4,23 @@ import * as server from "@minecraft/server";
  * 
  * @param {server.Player} player 
  */
-export function handlePlayerDeath(player) {
-    const inv = player.getComponent(server.EntityComponentTypes.Inventory)
-    if (!inv) return;
-    const container = inv.container;
-    const items = [];
-    for (let i = 0; i < container.size; i++) {
-        const item = container.getItem(i);
-        if (item) {
-            items.push(item.clone());
-            container.setItem(i, undefined);
-        }
-     }
+export function handleItemDrop(player) {
+    const dim = player.dimension;
+    const location = player.location;
+    const items = dim.getEntities({
+        type: 'minecraft:item',
+        location: location,
+        maxDistance: 5
+    })
+    const collectedItems = [];
+    for (const itemEntity of items) {
+        const itemCom = itemEntity.getComponent('minecraft:item');
+        if (!itemCom) continue;
+        const itemStack = itemCom.itemStack;
+        if (!itemStack) continue;
+        collectedItems.push(itemStack.clone());
+        itemEntity.remove();
+    }
 
-     player.sendMessage(`§cDeath detected. ${items.length} items stored in vault.`);
+    player.sendMessage(`Collected ${collectedItems.length} items from the ground.`);
 }

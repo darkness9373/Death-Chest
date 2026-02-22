@@ -1,10 +1,8 @@
 import * as server from "@minecraft/server";
-import { handlePlayerDeath } from "./VaultManager";
+import { handleItemDrop } from "./VaultManager";
 
-export function initDeathListener() {
-    server.world.afterEvents.entityDie.subscribe(data => {
-        const entity = data.deadEntity;
-        if (!(entity instanceof server.Player)) return
-        handlePlayerDeath(entity)
-    })
-}
+server.world.afterEvents.entityDie.subscribe(data => {
+    const player = data.deadEntity
+    if (!(player instanceof server.Player)) return;
+    handleItemDrop(player);
+})

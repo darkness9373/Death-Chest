@@ -1,3 +1,1 @@
-import { initDeathListener } from "./death/DeathManager";
-
-initDeathListener();
+import './death/DeathManager.js';
