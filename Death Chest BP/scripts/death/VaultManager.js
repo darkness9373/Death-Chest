@@ -41,5 +41,12 @@ export function handleItemDrop(player) {
     vault.setDynamicProperty('owner', player.id);
     vault.setDynamicProperty('deathTime', Date.now());
     vault.setDynamicProperty('expire', Date.now() + (20 * 60 * 1000));
+    vault.setDynamicProperty('x', x);
+    vault.setDynamicProperty('y', y);
+    vault.setDynamicProperty('z', z);
+    vault.setDynamicProperty('locked', true);
     vault.nameTag = 'test';
+    const key = new server.ItemStack('minecraft:tripwire_hook', 1);
+    key.setDynamicProperty('location', { x, y, z });
+    player.getComponent('minecraft:inventory').container.addItem(key);
 }

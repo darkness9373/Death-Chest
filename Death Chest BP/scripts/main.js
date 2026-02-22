@@ -19,5 +19,26 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
         player.sendMessage('This chest does not belong to you!');
         return;
     }
-    player.sendMessage('You have found a death vault!');
+    const isLocked = vault.getDynamicProperty('locked');
+    if (!isLocked) {
+        player.sendMessage('This chest is not locked!');
+        return;
+    }
+    const item = player.getComponent('minecraft:inventory').container.getItem(player.selectedSlotIndex);
+    if (!item || item.typeId !== 'minecraft:tripwire_hook') {
+        player.sendMessage('You must be holding the key!');
+        return;
+    }
+    const keyLocation = item.getDynamicProperty('location');
+    if (!keyLocation) {
+        player.sendMessage('This key is not bound to this chest!');
+        return;
+    }
+    if (keyLocation.x !== block.location.x || keyLocation.y !== block.location.y || keyLocation.z !== block.location.z) {
+        player.sendMessage('This key is not bound to this chest!');
+        return;
+    }
+    vault.setDynamicProperty('locked', false);
+    player.getComponent('minecraft:inventory').container.setItem(player.selectedSlotIndex, undefined);
+    player.sendMessage('The chest is unlocked!');
 })

@@ -1,3 +1,4 @@
+
 import * as server from "@minecraft/server";
 import { handleItemDrop } from "./VaultManager";
 
