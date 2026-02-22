@@ -46,7 +46,7 @@ export function handleItemDrop(player) {
     vault.setDynamicProperty('z', z);
     vault.setDynamicProperty('locked', true);
     vault.nameTag = 'test';
-    const key = new server.ItemStack('minecraft:tripwire_hook', 1);
+    const key = new server.ItemStack('dc:death_key');
     key.setDynamicProperty('location', { x, y, z });
     player.getComponent('minecraft:inventory').container.addItem(key);
 }
