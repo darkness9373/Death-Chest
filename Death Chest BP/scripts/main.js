@@ -29,7 +29,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
         player.sendMessage('You must be holding the key!');
         return;
     }
-    const keyLocation = item.getDynamicProperty('location');
+    const keyLocation = JSON.parse(item.getDynamicProperty('location')) ?? null;
     if (!keyLocation) {
         player.sendMessage('This key is not bound to this chest!');
         return;
