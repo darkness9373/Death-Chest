@@ -1,5 +1,6 @@
-import { world, system } from '@minecraft/server';
+import { world, system, Player, Entity, BlockPermutation } from '@minecraft/server';
 import './death/DeathManager.js';
+import { ActionFormData } from '@minecraft/server-ui';
 
 world.beforeEvents.playerInteractWithBlock.subscribe(data => {
     const { player, block } = data;
@@ -21,7 +22,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
     }
     const isLocked = vault.getDynamicProperty('locked');
     if (!isLocked) {
-        player.sendMessage('This chest is not locked!');
+        openVault(player, vault);
         return;
     }
     const item = player.getComponent('minecraft:inventory').container.getItem(player.selectedSlotIndex);
@@ -44,3 +45,66 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
     })
     player.sendMessage('The chest is unlocked!');
 })
+
+/**
+ * 
+ * @param {Player} player 
+ * @param {Entity} vault 
+ * @param {string} update 
+ */
+async function openVault(player, vault, update = '') {
+    const invCom = vault.getComponent('minecraft:inventory');
+    if (!invCom) return;
+    const container = invCom.container;
+    const form = new ActionFormData();
+    form.title('Death Chest');
+    form.body(update);
+    const slots = [];
+    for (let i = 0; i < container.size; i++) {
+        const item = container.getItem(i);
+        if (!item) continue;
+        form.button(`${item.amount}x ${item.typeId.split(':')[1]}`);
+        slots.push(i);
+    }
+    form.button('§aTransfer All');
+
+    const response = await form.show(player);
+    if (response.canceled) return;
+    if (response.selection === slots.length) {
+        transferAll(player, vault);
+        return;
+    }
+    const slotIndex = slots[response.selection];
+    const item = container.getItem(slotIndex);
+    if (!item) return;
+    container.setItem(slotIndex, undefined);
+    player.getComponent('minecraft:inventory').container.addItem(item);
+    player.sendMessage(`You took ${item.amount}x ${item.typeId.split(':')[1]}`);
+    openVault(player, vault, `§aYou took ${item.amount}x ${item.typeId.split(':')[1]}`);
+}
+
+/**
+ * 
+ * @param {Player} player 
+ * @param {Entity} vault 
+ */
+function transferAll(player, vault) {
+    const invCom = vault.getComponent('minecraft:inventory');
+    if (!invCom) return;
+    const container = invCom.container;
+    const playerInvCom = player.getComponent('minecraft:inventory').container;
+    for (let i = 0; i < container.size; i++) {
+        const item = container.getItem(i);
+        if (!item) continue;
+        const leftOver = playerInvCom.addItem(item);
+        if (leftOver) {
+            vault.dimension.spawnItem(leftOver, player.location);
+        }
+        container.setItem(i, undefined);
+    }
+    vault.dimension.getBlock({
+        x: Math.floor(vault.location.x),
+        y: Math.floor(vault.location.y - 1),
+        z: Math.floor(vault.location.z)
+    }).setPermutation(BlockPermutation.resolve('minecraft:air'));
+}
