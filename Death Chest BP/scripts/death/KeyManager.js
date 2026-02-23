@@ -1,5 +1,4 @@
 import { Player, system, world } from '@minecraft/server'
-import { jsx } from 'react/jsx-runtime';
 
 world.beforeEvents.itemUse.subscribe(data => {
     const player = data.source;
