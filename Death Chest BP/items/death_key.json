@@ -13,7 +13,11 @@
             "minecraft:display_name": {
                 "value": "Death Key"
             },
-            "minecraft:stacked_by_data": false
+            "minecraft:stacked_by_data": false,
+            "minecraft:cooldown": {
+                "category": "death_key_teleport",
+                "duration": 0.5
+            }
         }
     }
 }

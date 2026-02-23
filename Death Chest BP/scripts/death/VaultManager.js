@@ -31,10 +31,15 @@ export function handleItemDrop(player) {
     const key = new server.ItemStack('dc:death_key', 1);
     key.setDynamicProperty('location', JSON.stringify({
         x,
-        y,
+        y: y + 1,
         z,
         dimension: dim.id
     }));
+    key.nameTag = '§6Death Key';
+    key.setLore([
+        `§o${x}, ${y}, ${z}`,
+        `§o${dim.id}`
+    ])
     const vault = dim.spawnEntity('dc:chest_inventory', { x: x + 0.5, y: y + 1, z: z + 0.5 });
     vault.nameTag = `${player.name}'s Death Chest`;
     vault.addTag('death_vault');

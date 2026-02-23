@@ -1,4 +1,4 @@
-import { Player, world } from '@minecraft/server'
+import { Player, system, world } from '@minecraft/server'
 
 world.beforeEvents.itemUse.subscribe(data => {
     const player = data.source;
@@ -16,14 +16,16 @@ world.beforeEvents.itemUse.subscribe(data => {
         return;
     }
     const location = JSON.parse(locationStr);
-    player.tryTeleport({x: location.x, y: location.y, z: location.z },
-        {
-            dimension: world.getDimension(location.dimension),
-            keepVelocity: false
-        }
-    );
-    const items = data.itemStack.clone();
-    items.setDynamicProperty('teleportUsed', true);
-    player.onScreenDisplay.setActionBar('§aTeleported to death location!');
-    player.getComponent('equippable').setEquipment('Mainhand', items);
+    system.run(() => {
+        player.tryTeleport({ x: location.x, y: location.y, z: location.z },
+            {
+                dimension: world.getDimension(location.dimension),
+                keepVelocity: false
+            }
+        );
+        const items = data.itemStack.clone();
+        items.setDynamicProperty('teleportUsed', true);
+        player.onScreenDisplay.setActionBar('§aTeleported to death location!');
+        player.getComponent('equippable').setEquipment('Mainhand', items);
+    })
 })
