@@ -5,10 +5,7 @@ class Extra {
      */
     formatName(id) {
         const exceptions = ['of', 'the', 'and', 'a', 'an', 'in', 'on', 'with', 'at', 'by', 'for', 'to'];
-        let nm
-        if (id.includes(':')) {
-            nm = id.split(':')[1];
-        }
+        const nm = id.includes(':') ? id.split(':')[1] : id;
         return nm
             .replace(/_/g, ' ')
             .split(' ')
