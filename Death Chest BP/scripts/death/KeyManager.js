@@ -1,4 +1,5 @@
 import { Player, system, world } from '@minecraft/server'
+import { jsx } from 'react/jsx-runtime';
 
 world.beforeEvents.itemUse.subscribe(data => {
     const player = data.source;
@@ -25,6 +26,7 @@ world.beforeEvents.itemUse.subscribe(data => {
         );
         const items = data.itemStack.clone();
         items.setDynamicProperty('teleportUsed', true);
+        items.setDynamicProperty('location', JSON.stringify(location));
         player.onScreenDisplay.setActionBar('§aTeleported to death location!');
         player.getComponent('equippable').setEquipment('Mainhand', items);
     })

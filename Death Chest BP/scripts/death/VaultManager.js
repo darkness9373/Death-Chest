@@ -1,4 +1,5 @@
 import * as server from "@minecraft/server";
+import Extra from "../Extra";
 
 /**
  * 
@@ -37,8 +38,8 @@ export function handleItemDrop(player) {
     }));
     key.nameTag = '§6Death Key';
     key.setLore([
-        `§o${x}, ${y}, ${z}`,
-        `§o${dim.id}`
+        ` §5§o${x}, ${y}, ${z}`,
+        ` §5§oin ${Extra.formatName(dim.id)}`,
     ])
     const vault = dim.spawnEntity('dc:chest_inventory', { x: x + 0.5, y: y + 1, z: z + 0.5 });
     vault.nameTag = `${player.name}'s Death Chest`;
