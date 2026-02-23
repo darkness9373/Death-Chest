@@ -28,8 +28,20 @@ export function handleItemDrop(player) {
     if (chest) {
         chest.setPermutation(server.BlockPermutation.resolve('minecraft:chest'));
     }
+    const key = new server.ItemStack('dc:death_key', 1);
+    key.setDynamicProperty('location', JSON.stringify({
+        x,
+        y,
+        z,
+        dimension: dim.id
+    }));
     const vault = dim.spawnEntity('dc:chest_inventory', { x: x + 0.5, y: y + 1, z: z + 0.5 });
+    vault.nameTag = `${player.name}'s Death Chest`;
     vault.addTag('death_vault');
+    vault.setDynamicProperty('owner', player.id);
+    vault.setDynamicProperty('deathTime', Date.now());
+    vault.setDynamicProperty('expire', Date.now() + (20 * 60 * 1000));
+    vault.setDynamicProperty('locked', true);
     const invCom = vault.getComponent('minecraft:inventory');
     if (!invCom) return;
     const container = invCom.container;
@@ -38,19 +50,5 @@ export function handleItemDrop(player) {
         container.setItem(slot, item);
         slot++;
     }
-    vault.setDynamicProperty('owner', player.id);
-    vault.setDynamicProperty('deathTime', Date.now());
-    vault.setDynamicProperty('expire', Date.now() + (20 * 60 * 1000));
-    vault.setDynamicProperty('x', x);
-    vault.setDynamicProperty('y', y);
-    vault.setDynamicProperty('z', z);
-    vault.setDynamicProperty('locked', true);
-    const key = new server.ItemStack('dc:death_key', 1);
-    key.setDynamicProperty('location', JSON.stringify({
-        x,
-        y,
-        z,
-        dimension: dim.id
-    }));
     player.getComponent('minecraft:inventory').container.addItem(key);
 }

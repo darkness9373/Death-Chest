@@ -4,7 +4,7 @@
     "minecraft:entity": {
         "description": {
             "identifier": "dc:chest_inventory",
-            "is_spawnable": false,
+            "is_spawnable": true,
             "is_summonable": true,
             "is_experimental": false
         },
@@ -17,8 +17,8 @@
                 "max": 1
             },
             "minecraft:collision_box": {
-                "height": 0.2,
-                "width": 0.2
+                "height": 0.0,
+                "width": 0.0
             },
             "minecraft:damage_sensor": {
                 "triggers": [
@@ -34,19 +34,21 @@
             },
             "minecraft:inventory": {
                 "can_be_siphoned_from": false,
-                "inventory_size": 54
+                "inventory_size": 54,
+                "additional_slots_per_strength": 0,
+                "container_type": "inventory",
+                "private": false,
+                "restrict_to_owner": true
             },
             "minecraft:nameable": {
-                "allow_name_tag_renaming": true,
+                "allow_name_tag_renaming": false,
                 "always_show": true
             },
-            "minecraft:movement": {
-                "value": 0,
-                "max": 0
-            },
             "minecraft:physics": {
-                "has_gravity": false
-            }
+                "has_gravity": false,
+                "has_collision": false
+            },
+            "minecraft:persistent": {}
         }
     }
 }

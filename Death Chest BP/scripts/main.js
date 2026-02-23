@@ -17,33 +17,33 @@ world.beforeEvents.playerInteractWithBlock.subscribe(data => {
     const vault = vaults[0];
     const ownerId = vault.getDynamicProperty('owner');
     if (ownerId !== player.id) {
-        player.sendMessage('This chest does not belong to you!');
+        player.onScreenDisplay.setActionBar('§cThis is not your death chest!');
         return;
     }
     const isLocked = vault.getDynamicProperty('locked');
     if (!isLocked) {
-        openVault(player, vault);
+        system.run(() => openVault(player, vault));
         return;
     }
     const item = player.getComponent('minecraft:inventory').container.getItem(player.selectedSlotIndex);
     if (!item || item.typeId !== 'dc:death_key') {
-        player.sendMessage('You must be holding the key!');
+        player.onScreenDisplay.setActionBar('§cYou must be holding the key!');
         return;
     }
     const keyLocation = JSON.parse(item.getDynamicProperty('location')) ?? null;
     if (!keyLocation) {
-        player.sendMessage('This key is not bound to this chest!');
+        player.onScreenDisplay.setActionBar('§cThis key is not bound to this chest!');
         return;
     }
     if (keyLocation.x !== block.location.x || keyLocation.y !== block.location.y || keyLocation.z !== block.location.z) {
-        player.sendMessage('This key is not bound to this chest!');
+        player.onScreenDisplay.setActionBar('§cThis key is not bound to this chest!');
         return;
     }
     vault.setDynamicProperty('locked', false);
     system.run(() => {
         player.getComponent('minecraft:equippable').setEquipment('Mainhand', undefined)
     })
-    player.sendMessage('The chest is unlocked!');
+    player.onScreenDisplay.setActionBar('§aChest unlocked!');
 })
 
 /**
